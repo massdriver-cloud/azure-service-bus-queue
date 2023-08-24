@@ -27,4 +27,5 @@ resource "azurerm_servicebus_queue" "main" {
   enable_batched_operations    = var.queue.batched_operations
   requires_session             = var.queue.session
   requires_duplicate_detection = var.queue.duplicate_detection
+  enable_express               = var.service.sku == "Premium" ? false : var.queue.express
 }

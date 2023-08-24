@@ -250,11 +250,29 @@ params:
               properties:
                 sku:
                   const: Basic
+            queue:
+              properties:
+                express:
+                  title: Express entities
+                  description: Enable express entities to hold messages in memory temporarily before writing them to persistent storage.
+                  type: boolean
+                  default: false
+              required:
+                - express
         - properties:
             service:
               properties:
                 sku:
                   const: Standard
+            queue:
+              properties:
+                express:
+                  title: Express entities
+                  description: Enable express entities to hold messages in memory temporarily before writing them to persistent storage.
+                  type: boolean
+                  default: false
+              required:
+                - express
         - properties:
             service:
               properties:
