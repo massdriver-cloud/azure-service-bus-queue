@@ -253,8 +253,15 @@ params:
                   description: Enable express entities to hold messages in memory temporarily before writing them to persistent storage.
                   type: boolean
                   default: false
+                partitioning:
+                  type: boolean
+                  title: Enable partitioning
+                  description: Enable partitioning for the Service Bus Queue. **Cannot be changed after the resource is created.**
+                  default: false
+                  $md.immutable: true
               required:
                 - express
+                - partitioning
         - properties:
             service:
               properties:
@@ -267,15 +274,6 @@ params:
                   description: Enable express entities to hold messages in memory temporarily before writing them to persistent storage.
                   type: boolean
                   default: false
-              required:
-                - express
-        - properties:
-            service:
-              properties:
-                sku:
-                  const: Premium
-            queue:
-              properties:
                 partitioning:
                   type: boolean
                   title: Enable partitioning
@@ -283,7 +281,13 @@ params:
                   default: false
                   $md.immutable: true
               required:
+                - express
                 - partitioning
+        - properties:
+            service:
+              properties:
+                sku:
+                  const: Premium
 
 connections:
   required:
