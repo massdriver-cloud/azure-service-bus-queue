@@ -230,10 +230,6 @@ params:
                   type: object
                   title: Alarms
                   properties:
-                    dead_letter_metric_alert:
-                      title: Dead-lettered messages
-                      type: object
-                      <<: *monitor_alarm_metric
                     server_errors_metric_alert:
                       title: Server Errors
                       type: object
