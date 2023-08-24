@@ -2,7 +2,7 @@ schema: draft-07
 name: "azure-service-bus-queue"
 description: "Azure Service Bus is a fully managed enterprise message broker with message queues and publish-subscribe topics. Service Bus is used to decouple applications and services from each other, providing load-balancing work across competing works, safely routing and transferring data and control across service and application boundaries, and coordinating transactional work that requires a high-degree of reliability."
 source_url: github.com/massdriver-cloud/azure-service-bus-queue
-access: private
+access: public
 type: infrastructure
 
 MonitorAlarmMetric: &monitor_alarm_metric
@@ -190,7 +190,7 @@ params:
           $md.immutable: true
         duplicate_detection:
           title: Enable duplicate detection
-          description: Enable duplicate detection for the Service Bus Queue. 
+          description: Enable duplicate detection for the Service Bus Queue.
           type: boolean
           default: false
     monitoring:
