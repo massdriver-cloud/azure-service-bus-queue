@@ -194,8 +194,9 @@ params:
           $md.immutable: true
         duplicate_detection:
           title: Enable duplicate detection
-          description: Enable duplicate detection for the Service Bus Queue.
+          description: Enable duplicate detection for the Service Bus Queue. **Cannot be changed after the resource is created.**
           type: boolean
+          $md.immutable: true
           default: false
     monitoring:
       type: object

@@ -61,7 +61,7 @@ Form input parameters for configuring a bundle for deployment.
       - Disabled
 - **`queue`** *(object)*: Configure the Service Bus Queue.
   - **`batched_operations`** *(boolean)*: Enable server-side batched operations for the Service Bus Queue. Default: `True`.
-  - **`duplicate_detection`** *(boolean)*: Enable duplicate detection for the Service Bus Queue. Default: `False`.
+  - **`duplicate_detection`** *(boolean)*: Enable duplicate detection for the Service Bus Queue. **Cannot be changed after the resource is created.**. Default: `False`.
   - **`session`** *(boolean)*: Requires queue sessions that guarantee first-in-first-out delivery of messages. **Cannot be changed after the resource is created.**. Default: `False`.
 - **`service`** *(object)*: Configure the Service Bus Namespace.
   - **`region`** *(string)*: Select the Azure region you'd like to provision your Azure Service Bus in. **Cannot be changed after the resource is created.**.
