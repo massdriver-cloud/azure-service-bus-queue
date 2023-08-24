@@ -70,13 +70,19 @@ Form input parameters for configuring a bundle for deployment.
 
   ```json
   {
-      "__name": "Development"
+      "__name": "Development",
+      "service": {
+          "sku": "Basic"
+      }
   }
   ```
 
   ```json
   {
-      "__name": "Production"
+      "__name": "Production",
+      "service": {
+          "sku": "Standard"
+      }
   }
   ```
 

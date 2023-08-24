@@ -107,7 +107,11 @@ MonitorAlarmMetric: &monitor_alarm_metric
 params:
   examples:
     - __name: Development
+      service:
+        sku: Basic
     - __name: Production
+      service:
+        sku: Standard
   required:
     - service
     - queue
