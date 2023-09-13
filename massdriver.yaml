@@ -1,6 +1,6 @@
 schema: draft-07
 name: "azure-service-bus-queue"
-description: "Azure Service Bus is a fully managed enterprise message broker with message queues and publish-subscribe topics. Service Bus is used to decouple applications and services from each other, providing load-balancing work across competing works, safely routing and transferring data and control across service and application boundaries, and coordinating transactional work that requires a high-degree of reliability."
+description: "Azure Service Bus Queue is a point-to-point messaging mechanism that ensures messages are delivered to a single consumer, making it suitable for scenarios where each message should be processed by only one recipient."
 source_url: github.com/massdriver-cloud/azure-service-bus-queue
 access: public
 type: infrastructure
