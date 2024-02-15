@@ -188,7 +188,7 @@ params:
           default: true
         session:
           title: Enable sessions
-          description: Requires queue sessions that guarantee first-in-first-out delivery of messages. **Cannot be changed after the resource is created.**
+          description: Requires queue sessions that guarantee first-in-first-out delivery of messages. Cannot be used with Basic tier. **Cannot be changed after the resource is created.**
           type: boolean
           default: false
           $md.immutable: true
