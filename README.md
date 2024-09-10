@@ -17,7 +17,7 @@ Azure Service Bus Queue is a point-to-point messaging mechanism that ensures mes
 
 ## Design
 
-For detailed information, check out our [Operator Guide](operator.mdx) for this bundle.
+For detailed information, check out our [Operator Guide](operator.md) for this bundle.
 
 ## Usage
 
@@ -37,40 +37,8 @@ Form input parameters for configuring a bundle for deployment.
 <summary>View</summary>
 
 <!-- PARAMS:START -->
-## Properties
 
-- **`monitoring`** *(object)*
-  - **`mode`** *(string)*: Enable and customize Function App metric alarms. Default: `AUTOMATED`.
-    - **One of**
-      - Automated
-      - Custom
-      - Disabled
-- **`queue`** *(object)*: Configure the Service Bus Queue.
-  - **`batched_operations`** *(boolean)*: Enable server-side batched operations for the Service Bus Queue. Default: `True`.
-  - **`duplicate_detection`** *(boolean)*: Enable duplicate detection for the Service Bus Queue. **Cannot be changed after the resource is created.**. Default: `False`.
-  - **`session`** *(boolean)*: Requires queue sessions that guarantee first-in-first-out delivery of messages. Cannot be used with Basic tier. **Cannot be changed after the resource is created.**. Default: `False`.
-- **`service`** *(object)*: Configure the Service Bus Namespace.
-  - **`region`** *(string)*: Select the Azure region you'd like to provision your Azure Service Bus in. **Cannot be changed after the resource is created.**.
-  - **`sku`** *(string)*: Select your desired SKU tier for the Service Bus Namespace. **Cannot be changed after the resource is created.**. Must be one of: `['Basic', 'Standard', 'Premium']`. Default: `Standard`.
-## Examples
-
-  ```json
-  {
-      "__name": "Development",
-      "service": {
-          "sku": "Basic"
-      }
-  }
-  ```
-
-  ```json
-  {
-      "__name": "Production",
-      "service": {
-          "sku": "Standard"
-      }
-  }
-  ```
+**Params coming soon**
 
 <!-- PARAMS:END -->
 
@@ -84,33 +52,9 @@ Connections from other bundles that this bundle depends on.
 <summary>View</summary>
 
 <!-- CONNECTIONS:START -->
-## Properties
 
-- **`azure_service_principal`** *(object)*: . Cannot contain additional properties.
-  - **`data`** *(object)*
-    - **`client_id`** *(string)*: A valid UUID field.
+**Connections coming soon**
 
-      Examples:
-      ```json
-      "123xyz99-ab34-56cd-e7f8-456abc1q2w3e"
-      ```
-
-    - **`client_secret`** *(string)*
-    - **`subscription_id`** *(string)*: A valid UUID field.
-
-      Examples:
-      ```json
-      "123xyz99-ab34-56cd-e7f8-456abc1q2w3e"
-      ```
-
-    - **`tenant_id`** *(string)*: A valid UUID field.
-
-      Examples:
-      ```json
-      "123xyz99-ab34-56cd-e7f8-456abc1q2w3e"
-      ```
-
-  - **`specs`** *(object)*
 <!-- CONNECTIONS:END -->
 
 </details>
@@ -123,43 +67,9 @@ Resources created by this bundle that can be connected to other bundles.
 <summary>View</summary>
 
 <!-- ARTIFACTS:START -->
-## Properties
 
-- **`azure_service_bus_queue`** *(object)*: . Cannot contain additional properties.
-  - **`data`** *(object)*
-    - **`infrastructure`** *(object)*
-      - **`ari`** *(string)*: Azure Resource ID.
+**Artifacts coming soon**
 
-        Examples:
-        ```json
-        "/subscriptions/12345678-1234-1234-abcd-1234567890ab/resourceGroups/resource-group-name/providers/Microsoft.Network/virtualNetworks/network-name"
-        ```
-
-      - **`endpoint`** *(string)*: Azure Service Bus endpoint and port. Cannot contain additional properties.
-
-        Examples:
-        ```json
-        "https://local-dev-queues-0001.servicebus.windows.net:443/"
-        ```
-
-        ```json
-        "sb://local-dev-queues-0001.servicebus.windows.net"
-        ```
-
-    - **`security`** *(object)*: Azure Security Configuration. Cannot contain additional properties.
-      - **`iam`** *(object)*: IAM Roles And Scopes. Cannot contain additional properties.
-        - **`^[a-z]+[a-z_]*[a-z]$`** *(object)*
-          - **`role`**: Azure Role.
-
-            Examples:
-            ```json
-            "Storage Blob Data Reader"
-            ```
-
-          - **`scope`** *(string)*: Azure IAM Scope.
-  - **`specs`** *(object)*
-    - **`azure`** *(object)*: .
-      - **`region`** *(string)*: Select the Azure region you'd like to provision your resources in.
 <!-- ARTIFACTS:END -->
 
 </details>
