@@ -1,185 +1,183 @@
 schema: draft-07
-name: "azure-service-bus-queue"
-description: "Azure Service Bus Queue is a point-to-point messaging mechanism that ensures messages are delivered to a single consumer, making it suitable for scenarios where each message should be processed by only one recipient."
-source_url: github.com/massdriver-cloud/azure-service-bus-queue
-access: public
-type: infrastructure
-
-MonitorAlarmMetric: &monitor_alarm_metric
-  required:
-    - severity
-    - frequency
-    - window_size
-    - aggregation
-    - operator
-    - threshold
-  properties:
+name: azure-service-bus-queue
+version: 1.0.0
+description: Azure Service Bus Queue is a point-to-point messaging mechanism that ensures messages are delivered to a single consumer, making it suitable for scenarios where each message should be processed by only one recipient.
+source_url: https://github.com/massdriver-cloud/azure-service-bus-queue
+type: application
+MonitorAlarmMetric:
+  required: &1
+  - severity
+  - frequency
+  - window_size
+  - aggregation
+  - operator
+  - threshold
+  properties: &2
     severity:
       title: Severity
       description: The severity of the alarm.
       type: integer
       default: 0
       oneOf:
-        - title: Critical
-          const: 0
-        - title: Error
-          const: 1
-        - title: Warning
-          const: 2
-        - title: Information
-          const: 3
-        - title: Verbose
-          const: 4
+      - title: Critical
+        const: 0
+      - title: Error
+        const: 1
+      - title: Warning
+        const: 2
+      - title: Information
+        const: 3
+      - title: Verbose
+        const: 4
     frequency:
       title: Frequency
       description: The evaluation frequency of the alarms.
       type: string
       default: PT1M
       oneOf:
-        - title: Every 1 minute
-          const: PT1M
-        - title: Every 5 minutes
-          const: PT5M
-        - title: Every 15 minutes
-          const: PT15M
-        - title: Every 30 minutes
-          const: PT30M
-        - title: Every 1 hour
-          const: PT1H
+      - title: Every 1 minute
+        const: PT1M
+      - title: Every 5 minutes
+        const: PT5M
+      - title: Every 15 minutes
+        const: PT15M
+      - title: Every 30 minutes
+        const: PT30M
+      - title: Every 1 hour
+        const: PT1H
     window_size:
       title: Alarm window
       description: The time range over which the alarm is evaluated.
       type: string
       default: PT5M
       oneOf:
-        - title: Every 1 minute
-          const: PT1M
-        - title: Every 5 minutes
-          const: PT5M
-        - title: Every 15 minutes
-          const: PT15M
-        - title: Every 30 minutes
-          const: PT30M
-        - title: Every 1 hour
-          const: PT1H
-        - title: Every 6 hours
-          const: PT6H
-        - title: Every 12 hours
-          const: PT12H
-        - title: Every 24 hours
-          const: P1D
+      - title: Every 1 minute
+        const: PT1M
+      - title: Every 5 minutes
+        const: PT5M
+      - title: Every 15 minutes
+        const: PT15M
+      - title: Every 30 minutes
+        const: PT30M
+      - title: Every 1 hour
+        const: PT1H
+      - title: Every 6 hours
+        const: PT6H
+      - title: Every 12 hours
+        const: PT12H
+      - title: Every 24 hours
+        const: P1D
     aggregation:
       title: Aggregation
       description: The aggregation type of the alarm.
       type: string
       default: Average
       enum:
-        - Average
-        - Count
-        - Minimum
-        - Maximum
-        - Total
+      - Average
+      - Count
+      - Minimum
+      - Maximum
+      - Total
     operator:
       title: Operator
       description: The operator used to compare the metric value to the threshold.
       type: string
       default: GreaterThanOrEqual
       oneOf:
-        - title: Greater than or equal to
-          const: GreaterThanOrEqual
-        - title: Greater than
-          const: GreaterThan
-        - title: Less than or equal to
-          const: LessThanOrEqual
-        - title: Less than
-          const: LessThan
-        - title: Equals
-          const: Equals
-        - title: Not equal to
-          const: NotEquals
+      - title: Greater than or equal to
+        const: GreaterThanOrEqual
+      - title: Greater than
+        const: GreaterThan
+      - title: Less than or equal to
+        const: LessThanOrEqual
+      - title: Less than
+        const: LessThan
+      - title: Equals
+        const: Equals
+      - title: Not equal to
+        const: NotEquals
     threshold:
       title: Threshold
       description: The threshold for the number of server errors or server send latency in milliseconds.
       type: integer
       minimum: 0
       maximum: 10000
-
 params:
   examples:
-    - __name: Development
-      service:
-        sku: Basic
-    - __name: Production
-      service:
-        sku: Standard
+  - __name: Development
+    service:
+      sku: Basic
+  - __name: Production
+    service:
+      sku: Standard
   required:
-    - service
-    - queue
-    - monitoring
+  - service
+  - queue
+  - monitoring
   properties:
     service:
       type: object
       title: Service Bus Configuration
       description: Configure the Service Bus Namespace
       required:
-        - region
-        - sku
+      - region
+      - sku
       properties:
         region:
           description: Select the Azure region you'd like to provision your Azure Service Bus in. **Cannot be changed after the resource is created.**
-          $ref: https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/azure-region.json
-          $md.immutable: true
+          "$ref": https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/azure-region.json
+          "$md.immutable": true
         sku:
           type: string
           title: SKU Tier
           description: Select your desired SKU tier for the Service Bus Namespace. **Cannot be changed after the resource is created.**
-          $md.immutable: true
+          "$md.immutable": true
           default: Standard
           enum:
-            - Basic
-            - Standard
-            - Premium
+          - Basic
+          - Standard
+          - Premium
       dependencies:
         sku:
           oneOf:
-            - properties:
-                sku:
-                  const: Basic
-            - properties:
-                sku:
-                  const: Standard
-            - properties:
-                sku:
-                  const: Premium
-                capacity:
-                  type: integer
-                  title: Capacity
-                  description: The capacity of the Service Bus Namespace. **Cannot be changed after the resource is created.**
-                  $md.immutable: true
-                  default: 1
-                  enum:
-                    - 1
-                    - 2
-                    - 4
-                    - 8
-                    - 16
-                zone_redundant:
-                  type: boolean
-                  title: Enable zone redundancy
-                  description: Enable zone redundancy for the Service Bus Namespace. **Cannot be changed after the resource is created.**
-                  default: false
-                  $md.immutable: true
-              required:
-                - capacity
-                - zone_redundant
+          - properties:
+              sku:
+                const: Basic
+          - properties:
+              sku:
+                const: Standard
+          - properties:
+              sku:
+                const: Premium
+              capacity:
+                type: integer
+                title: Capacity
+                description: The capacity of the Service Bus Namespace. **Cannot be changed after the resource is created.**
+                "$md.immutable": true
+                default: 1
+                enum:
+                - 1
+                - 2
+                - 4
+                - 8
+                - 16
+              zone_redundant:
+                type: boolean
+                title: Enable zone redundancy
+                description: Enable zone redundancy for the Service Bus Namespace. **Cannot be changed after the resource is created.**
+                default: false
+                "$md.immutable": true
+            required:
+            - capacity
+            - zone_redundant
     queue:
       type: object
       title: Queue Configuration
       description: Configure the Service Bus Queue
       required:
-        - batched_operations
-        - session
-        - duplicate_detection
+      - batched_operations
+      - session
+      - duplicate_detection
       properties:
         batched_operations:
           title: Enable batched operations
@@ -191,12 +189,12 @@ params:
           description: Requires queue sessions that guarantee first-in-first-out delivery of messages. Cannot be used with Basic tier. **Cannot be changed after the resource is created.**
           type: boolean
           default: false
-          $md.immutable: true
+          "$md.immutable": true
         duplicate_detection:
           title: Enable duplicate detection
           description: Enable duplicate detection for the Service Bus Queue. **Cannot be changed after the resource is created.**
           type: boolean
-          $md.immutable: true
+          "$md.immutable": true
           default: false
     monitoring:
       type: object
@@ -208,142 +206,147 @@ params:
           type: string
           default: AUTOMATED
           oneOf:
-            - const: AUTOMATED
-              title: Automated
-            - const: CUSTOM
-              title: Custom
-            - const: DISABLED
-              title: Disabled
+          - const: AUTOMATED
+            title: Automated
+          - const: CUSTOM
+            title: Custom
+          - const: DISABLED
+            title: Disabled
       dependencies:
         mode:
           oneOf:
-            - properties:
-                mode:
-                  const: AUTOMATED
-            - properties:
-                mode:
-                  const: DISABLED
-            - properties:
-                mode:
-                  const: CUSTOM
-                alarms:
-                  type: object
-                  title: Alarms
-                  properties:
-                    server_errors_metric_alert:
-                      title: Server Errors
-                      type: object
-                      <<: *monitor_alarm_metric
-                    latency_metric_alert:
-                      title: Server Send Latency
-                      type: object
-                      <<: *monitor_alarm_metric
+          - properties:
+              mode:
+                const: AUTOMATED
+          - properties:
+              mode:
+                const: DISABLED
+          - properties:
+              mode:
+                const: CUSTOM
+              alarms:
+                type: object
+                title: Alarms
+                properties:
+                  server_errors_metric_alert:
+                    title: Server Errors
+                    type: object
+                    required: *1
+                    properties: *2
+                  latency_metric_alert:
+                    title: Server Send Latency
+                    type: object
+                    required: *1
+                    properties: *2
   dependencies:
     service:
       oneOf:
-        - properties:
-            service:
-              properties:
-                sku:
-                  const: Basic
-            queue:
-              properties:
-                express:
-                  title: Express entities
-                  description: Enable express entities to hold messages in memory temporarily before writing them to persistent storage.
-                  type: boolean
-                  default: false
-                partitioning:
-                  type: boolean
-                  title: Enable partitioning
-                  description: Enable partitioning for the Service Bus Queue. **Cannot be changed after the resource is created.**
-                  default: false
-                  $md.immutable: true
-              required:
-                - express
-                - partitioning
-        - properties:
-            service:
-              properties:
-                sku:
-                  const: Standard
-            queue:
-              properties:
-                express:
-                  title: Express entities
-                  description: Enable express entities to hold messages in memory temporarily before writing them to persistent storage.
-                  type: boolean
-                  default: false
-                partitioning:
-                  type: boolean
-                  title: Enable partitioning
-                  description: Enable partitioning for the Service Bus Queue. **Cannot be changed after the resource is created.**
-                  default: false
-                  $md.immutable: true
-              required:
-                - express
-                - partitioning
-        - properties:
-            service:
-              properties:
-                sku:
-                  const: Premium
-
+      - properties:
+          service:
+            properties:
+              sku:
+                const: Basic
+          queue:
+            properties:
+              express:
+                title: Express entities
+                description: Enable express entities to hold messages in memory temporarily before writing them to persistent storage.
+                type: boolean
+                default: false
+              partitioning:
+                type: boolean
+                title: Enable partitioning
+                description: Enable partitioning for the Service Bus Queue. **Cannot be changed after the resource is created.**
+                default: false
+                "$md.immutable": true
+            required:
+            - express
+            - partitioning
+      - properties:
+          service:
+            properties:
+              sku:
+                const: Standard
+          queue:
+            properties:
+              express:
+                title: Express entities
+                description: Enable express entities to hold messages in memory temporarily before writing them to persistent storage.
+                type: boolean
+                default: false
+              partitioning:
+                type: boolean
+                title: Enable partitioning
+                description: Enable partitioning for the Service Bus Queue. **Cannot be changed after the resource is created.**
+                default: false
+                "$md.immutable": true
+            required:
+            - express
+            - partitioning
+      - properties:
+          service:
+            properties:
+              sku:
+                const: Premium
 connections:
   required:
   - azure_service_principal
   properties:
     azure_service_principal:
-      $ref: massdriver/azure-service-principal
-
+      "$ref": massdriver/azure-service-principal
 artifacts:
   required:
-    - azure_service_bus_queue
+  - azure_service_bus_queue
   properties:
     azure_service_bus_queue:
-      $ref: massdriver/azure-service-bus-queue
-
+      "$ref": massdriver/azure-service-bus-queue
 ui:
   ui:order:
-    - service
-    - queue
-    - monitoring
-    - "*"
+  - service
+  - queue
+  - monitoring
+  - "*"
   service:
     ui:order:
-      - region
-      - sku
-      - capacity
-      - zone_redundant
-      - "*"
+    - region
+    - sku
+    - capacity
+    - zone_redundant
+    - "*"
     region:
       ui:field: supportedCloudLocationsDropdown
       cloudService: azure
   queue:
     ui:order:
-      - partitioning
-      - batched_operations
-      - session
-      - duplicate_detection
-      - "*"
+    - partitioning
+    - batched_operations
+    - session
+    - duplicate_detection
+    - "*"
   monitoring:
     ui:order:
-      - mode
-      - alarms
-      - '*'
+    - mode
+    - alarms
+    - "*"
     alarms:
       ui:order:
-        - server_errors_metric_alert
-        - latency_metric_alert
-        - '*'
-      server_errors_metric_alert: &monitor_alarm_metric_ui
-        ui:order:
-          - severity
-          - operator
-          - aggregation
-          - frequency
-          - window_size
-          - threshold
-          - '*'
+      - server_errors_metric_alert
+      - latency_metric_alert
+      - "*"
+      server_errors_metric_alert:
+        ui:order: &3
+        - severity
+        - operator
+        - aggregation
+        - frequency
+        - window_size
+        - threshold
+        - "*"
       latency_metric_alert:
-        <<: *monitor_alarm_metric_ui
+        ui:order: *3
+steps:
+- path: src
+  provisioner: opentofu
+  config:
+    checkov:
+      enable: true
